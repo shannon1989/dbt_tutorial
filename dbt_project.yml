@@ -36,11 +36,11 @@ clean-targets:         # directories to be removed by `dbt clean`
 # using the `{{ config(...) }}` macro.
 
 models:
-  land_market:
-    # Applies to all files under models/example/
+  land_market_analysis:
+    # Applies to all files under models/
     20_datastore:
-      schema: 20_datastore
-      +materialized: table
+      +schema: 20_datastore
+
     30_datamart:
-      schema: 30_datamart
-      +materialized: table
+      +schema: 30_datamart
+
