@@ -1,7 +1,9 @@
 {{ config(
-    materialized='table',
-    unique_key='land_uid'
+    materialized='incremental',
+    unique_key='land_uid',
+    on_schema_change='sync'
 ) }}
+
 
 with source as (
     select  transaction_id,
@@ -11,7 +13,7 @@ with source as (
         `地块编号` as land_number,
         `土地使用权竞得人` as land_owner,
         `土地位置` as land_location,
-        double(`土地面积_公顷`) as land_area_hectare,
+        case when double(`土地面积_公顷`) > 100 then double(`土地面积_公顷`) / 10000 else double(`土地面积_公顷`) end as land_area_hectare, --公顷大于100被认为平方米
         double(regexp_extract(`土地面积_sqm`, '([0-9.]+)', 1)) as land_area_sqm, 
         `土地用途` as land_use,
         case when regexp_extract(`建筑面积_sqm_容积率`, '([0-9.]+)', 1) = "" then null else regexp_extract(`建筑面积_sqm_容积率`, '([0-9.]+)', 1) end as building_area_sqm_1,
