@@ -7,7 +7,7 @@ with cleaned as (
     select
         land_uid, 
         regexp_replace(land_use, '；|、|:|：|，', ',') as cleaned_land_use
-    from {{ref("transaction_detail")}}
+    from {{ref("fact_transaction_detail")}}
 ),
 
 -- step 2：split + explode 拆分
