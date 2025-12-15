@@ -2,7 +2,7 @@
 version: 2
 
 models:
-    - name: transaction_detail
+    - name: fact_transaction_detail
       description: "地块成交明细表"
       columns:
           - name: land_uid
